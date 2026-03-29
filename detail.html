@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детальна сторінка — Motovolyn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gallery-img {
+            transition: all 0.3s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgb(16 185 129 / 0.3);
+        }
+
+        .modal {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 text-white">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-4 group">
+                <img src="./images/download.avif" alt="Motovolyn Logo"
+                    class="h-14 w-auto drop-shadow-2xl group-hover:scale-105 transition-transform">
+                <div class="text-4xl font-bold tracking-[-3px] leading-none"
+                    style="font-family: 'Space Grotesk', sans-serif;">
+                    MOTOVOLYN
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-10 text-lg font-medium">
+                <a href="index.html">Головна</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="index.html#about">Про нас</a>
+                <a href="index.html#salon">Мотосалон</a>
+                <a href="index.html#contacts">Контакти</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="tel:+380965562288"
+                    class="hidden sm:flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 py-4 rounded-3xl text-sm uppercase tracking-widest shadow-lg shadow-emerald-500/40 transition-all">
+                    <i class="fa-solid fa-phone"></i> ЗАТЕЛЕФОНУВАТИ
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden w-12 h-12 text-3xl">
+                    <i id="hamburger" class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-t border-zinc-800 px-6 py-8">
+            <div class="flex flex-col gap-6 text-xl font-medium">
+                <a href="index.html" onclick="toggleMobileMenu()">Головна</a>
+                <a href="catalog.html" onclick="toggleMobileMenu()">Каталог</a>
+                <a href="index.html#about" onclick="toggleMobileMenu()">Про нас</a>
+                <a href="index.html#salon" onclick="toggleMobileMenu()">Мотосалон</a>
+                <a href="index.html#contacts" onclick="toggleMobileMenu()">Контакти</a>
+                <a href="tel:+380965562288"
+                    class="mt-6 bg-emerald-500 text-black py-5 text-center rounded-3xl font-semibold text-xl flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-phone"></i> ЗАТЕЛЕФОНУВАТИ ЗАРАЗ
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- DETAIL PAGE -->
+    <section class="py-12 bg-zinc-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div id="detail-content" class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+                <!-- Заповнюється JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Технічні характеристики та опис -->
+    <section class="py-20 bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-zinc-900 p-8 rounded-3xl">
+                    <h3 class="text-emerald-400 text-lg font-medium mb-6">ТЕХНІЧНІ ХАРАКТЕРИСТИКИ</h3>
+                    <div id="tech-specs" class="space-y-6 text-zinc-300"></div>
+                </div>
+                <div class="md:col-span-2 bg-zinc-900 p-8 rounded-3xl">
+                    <h3 class="text-emerald-400 text-lg font-medium mb-6">ОПИС МОДЕЛІ</h3>
+                    <p id="full-description" class="text-lg leading-relaxed text-zinc-300"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальне вікно для збільшення фото -->
+    <div id="image-modal" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center">
+        <div class="relative max-w-5xl w-full px-4">
+            <button onclick="closeModal()"
+                class="absolute -top-12 right-4 text-white text-4xl hover:text-emerald-400 transition-colors">
+                ✕
+            </button>
+            <img id="modal-image" src="" alt="" class="w-full max-h-[85vh] object-contain rounded-2xl">
+        </div>
+    </div>
+
+    <footer class="bg-black py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            © 2026 Motovolyn • Цумань, Волинська область
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Дані з реальними картинками з інтернету (Unsplash + Pexels)
+        const bikes = {
+            1: {
+                name: "Honda CRF 300L",
+                category: "Enduro",
+                year: 2025,
+                price: "259 000",
+                mainImage: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2070",
+                images: [
+                    "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2070",
+                    "https://preview.redd.it/sport-tourer-kawasaki-or-suzuki-v0-1oz6mir3ho7g1.jpeg?width=4928&format=pjpg&auto=webp&s=df143214326f98c2c6fcc9902a095cc6c6613e84",
+                    "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=2070"
+                ],
+                desc: "Надійний позашляховий мотоцикл для справжніх пригод.",
+                power: "27.6 к.с.",
+                weight: "142 кг",
+                engine: "286 см³, одноциліндровий",
+                fuel: "7.8 л",
+                fullDesc: "Honda CRF 300L — універсальний ендуро мотоцикл з відмінною прохідністю та надійністю. Ідеальний вибір для бездоріжжя та щоденних поїздок."
+            },
+            2: {
+                name: "Yamaha MT-07",
+                category: "Naked",
+                year: 2025,
+                price: "319 000",
+                mainImage: "https://outdoor-motor-sports.com/wp-content/uploads/2026/01/689e49b6abecbf40de0f68c0.jpeg",
+                images: [
+                    "https://outdoor-motor-sports.com/wp-content/uploads/2026/01/689e49b6abecbf40de0f68c0.jpeg",
+                    "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=2070",
+                    "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2070"
+                ],
+                desc: "Динамічний naked-байк з характером.",
+                power: "73 к.с.",
+                weight: "184 кг",
+                engine: "689 см³, рядний двомотор",
+                fuel: "14 л",
+                fullDesc: "Yamaha MT-07 — один з найпопулярніших naked мотоциклів завдяки потужному двигуну та відмінній керованісті."
+            },
+            3: {
+                name: "BMW R 1300 GS",
+                category: "Adventure",
+                year: 2025,
+                price: "899 000",
+                mainImage: "https://images.bikeexif.com/2023/09/2024-bmw-r1300gs-news.jpg?v=1753769650",
+                images: [
+                    "https://images.bikeexif.com/2023/09/2024-bmw-r1300gs-news.jpg?v=1753769650",
+                    "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2070",
+                    "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=2070"
+                ],
+                desc: "Флагманський adventure для далеких подорожей.",
+                power: "145 к.с.",
+                weight: "237 кг",
+                engine: "1300 см³, оппозитний двомотор",
+                fuel: "19 л",
+                fullDesc: "BMW R 1300 GS — вершина класу adventure з потужним двигуном, сучасними технологіями та високим комфортом."
+            }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('id')) || 1;
+        const bike = bikes[id] || bikes[1];
+
+        let currentImageIndex = 0;
+
+        function showImage(index) {
+            currentImageIndex = index;
+            document.getElementById('main-image').src = bike.images[index];
+        }
+
+        function openModal(index) {
+            currentImageIndex = index;
+            document.getElementById('modal-image').src = bike.images[index];
+            document.getElementById('image-modal').classList.remove('hidden');
+            document.getElementById('image-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+            document.getElementById('image-modal').classList.remove('flex');
+        }
+
+        // Основний контент
+        document.getElementById('detail-content').innerHTML = `
+            <div class="space-y-8">
+                <div>
+                    <span class="inline-block px-5 py-2 bg-emerald-500/10 text-emerald-400 rounded-3xl text-sm font-medium">
+                        ${bike.category} • ${bike.year}
+                    </span>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-3px] mt-4 leading-none">${bike.name}</h1>
+                    <p class="text-2xl text-zinc-300 mt-8">${bike.desc}</p>
+                </div>
+
+                <div class="flex items-baseline gap-3">
+                    <span class="text-6xl font-bold text-emerald-400">${bike.price}</span>
+                    <span class="text-3xl text-zinc-400">₴</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="tel:+380965562288" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-xl py-6 rounded-3xl text-center transition-all flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-phone"></i> ЗАТЕЛЕФОНУВАТИ
+                    </a>
+                    <button onclick="alert('Запит на тест-драйв надіслано!')" 
+                            class="flex-1 border-2 border-emerald-400 hover:bg-emerald-400/10 font-semibold text-xl py-6 rounded-3xl text-center transition-all">
+                        ЗАПИСАТИСЯ НА ТЕСТ-ДРАЙВ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Галерея -->
+            <div>
+                <!-- Головна велика картинка -->
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer" onclick="openModal(${currentImageIndex})">
+                    <img id="main-image" src="${bike.mainImage}" 
+                         alt="${bike.name}" 
+                         class="w-full h-auto object-cover aspect-[16/10]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                        <p class="text-white text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass"></i> Натисніть, щоб збільшити
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Мініатюри -->
+                <div class="flex gap-4 mt-6 overflow-x-auto pb-4">
+                    ${bike.images.map((img, index) => `
+                        <img src="${img}" 
+                             onclick="showImage(${index})" 
+                             class="gallery-img w-24 h-24 object-cover rounded-2xl cursor-pointer border-2 border-transparent hover:border-emerald-500 transition-all ${index === 0 ? 'border-emerald-500' : ''}">
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        // Заповнення характеристик
+        document.getElementById('tech-specs').innerHTML = `
+            <div class="flex justify-between py-3 border-b border-zinc-800"><span class="text-zinc-400">Потужність</span><span>${bike.power}</span></div>
+            <div class="flex justify-between py-3 border-b border-zinc-800"><span class="text-zinc-400">Вага</span><span>${bike.weight}</span></div>
+            <div class="flex justify-between py-3 border-b border-zinc-800"><span class="text-zinc-400">Двигун</span><span>${bike.engine}</span></div>
+            <div class="flex justify-between py-3"><span class="text-zinc-400">Бак</span><span>${bike.fuel}</span></div>
+        `;
+
+        document.getElementById('full-description').textContent = bike.fullDesc;
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Закриття модального вікна при кліку поза картинкою
+        document.getElementById('image-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+
+</html>
