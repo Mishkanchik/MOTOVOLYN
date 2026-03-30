@@ -3,7 +3,7 @@ const motorcycles = [
         id: 1,
         name: "Honda CRF 300L",
         category: "enduro",
-        price: "259 000",
+        price: "1 960,00",
         year: 2025,
         image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=800"
     },
@@ -11,7 +11,7 @@ const motorcycles = [
         id: 2,
         name: "Yamaha MT-07",
         category: "naked",
-        price: "319 000",
+        price: "1 665,00",
         year: 2025,
         image: "https://nrmotoco.com/wp-content/uploads/2023/08/2017-Yamaha-MT07-HO-f45rs.jpg"
     },
@@ -19,7 +19,7 @@ const motorcycles = [
         id: 3,
         name: "BMW R 1300 GS",
         category: "adventure",
-        price: "899 000",
+        price: "2 300,00",
         year: 2025,
         image: "https://images.bikeexif.com/2023/09/2024-bmw-r1300gs-news.jpg?v=1753769650"
     },
@@ -27,7 +27,7 @@ const motorcycles = [
         id: 4,
         name: "KTM 390 Duke",
         category: "naked",
-        price: "229 000",
+        price: "2 350,00",
         year: 2025,
         image: "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=800"
     }
@@ -46,7 +46,7 @@ function createMotoCard(moto) {
         hover:shadow-[0_30px_80px_rgba(16,185,129,0.25)]
 
         transition-all duration-300
-        hover:-translate-y-2
+        
     `;
 
     card.innerHTML = `
@@ -81,7 +81,7 @@ function createMotoCard(moto) {
             <div class="flex justify-between items-end mb-7">
                 <div>
                     <p class="text-xs uppercase tracking-widest text-zinc-500 mb-1">Ціна</p>
-                    <p class="text-white text-2xl font-bold">${moto.price} ₴</p>
+                    <p class="text-white text-2xl font-bold">${moto.price} $</p>
                 </div>
             </div>
             
